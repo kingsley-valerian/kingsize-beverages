@@ -1,6 +1,11 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
+import {
+  useEffect,
+  useRef,
+  useState,
+  type MouseEvent as ReactMouseEvent,
+} from "react";
 import Link from "next/link";
 
 const categories = [
@@ -40,7 +45,8 @@ const categories = [
   {
     name: "Malt Drinks",
     eyebrow: "05 / Rich & satisfying",
-    label: "Amstel Malta and other popular malt beverages for shops, hospitality and events.",
+    label:
+      "Amstel Malta and other popular malt beverages for shops, hospitality and events.",
     image:
       "https://i.ebayimg.com/images/g/SrUAAeSwULxpLEsZ/s-l1200.jpg",
     imageFit: "contain" as const,
@@ -49,7 +55,8 @@ const categories = [
   {
     name: "Milk & Dairy",
     eyebrow: "06 / Everyday essentials",
-    label: "Hollandia yoghurt and full cream evaporated milk for everyday consumption and business supply.",
+    label:
+      "Hollandia yoghurt and full cream evaporated milk for everyday consumption and business supply.",
     image:
       "https://hollandiadairyng.com/assets/imgs/products-dp/prdts_yoghurt_plainSweetened.png",
     secondaryImage:
@@ -136,6 +143,47 @@ const reasons = [
   },
 ];
 
+const orderingSteps = [
+  {
+    number: "01",
+    title: "Tell us what you need",
+    text: "Share the beverages, brands and quantities your business requires.",
+  },
+  {
+    number: "02",
+    title: "Get your quote",
+    text: "We'll review your requirements and discuss current availability and pricing.",
+  },
+  {
+    number: "03",
+    title: "Confirm your order",
+    text: "Agree on quantities, delivery details and the order requirements.",
+  },
+  {
+    number: "04",
+    title: "Receive your supply",
+    text: "Your beverages are prepared for the agreed fulfilment arrangement.",
+  },
+];
+
+const lifestyleImages = [
+  {
+    src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1800&q=90",
+    alt: "People enjoying time together",
+    className: "lg:col-span-7 lg:row-span-2",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=90",
+    alt: "People sharing a social moment",
+    className: "lg:col-span-5",
+  },
+  {
+    src: "https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90",
+    alt: "Refreshing beverage",
+    className: "lg:col-span-5",
+  },
+];
+
 function Arrow({ size = 18 }: { size?: number }) {
   return (
     <svg
@@ -194,6 +242,10 @@ function CheckIcon() {
 export default function Home() {
   const categoryRef = useRef<HTMLDivElement>(null);
 
+  const categoryDragging = useRef(false);
+  const categoryDragStartX = useRef(0);
+  const categoryDragStartScrollLeft = useRef(0);
+
   const [scrolled, setScrolled] = useState(false);
   const [activeBusiness, setActiveBusiness] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
@@ -228,12 +280,49 @@ export default function Home() {
     });
   };
 
+  const handleCategoryMouseDown = (
+    event: ReactMouseEvent<HTMLDivElement>
+  ) => {
+    if (!categoryRef.current) return;
+
+    if (event.button !== 0) return;
+
+    categoryDragging.current = true;
+    categoryDragStartX.current = event.clientX;
+    categoryDragStartScrollLeft.current = categoryRef.current.scrollLeft;
+
+    categoryRef.current.classList.add("cursor-grabbing");
+    categoryRef.current.classList.add("dragging");
+
+    event.preventDefault();
+  };
+
+  const handleCategoryMouseMove = (
+    event: ReactMouseEvent<HTMLDivElement>
+  ) => {
+    if (!categoryDragging.current || !categoryRef.current) return;
+
+    const distance = event.clientX - categoryDragStartX.current;
+
+    categoryRef.current.scrollLeft =
+      categoryDragStartScrollLeft.current - distance;
+  };
+
+  const stopCategoryDragging = () => {
+    if (!categoryRef.current) return;
+
+    categoryDragging.current = false;
+
+    categoryRef.current.classList.remove("cursor-grabbing");
+    categoryRef.current.classList.remove("dragging");
+  };
+
   const closeMenu = () => {
     setMenuOpen(false);
   };
 
   return (
-    <main className="min-w-0 bg-white text-[#09294b]">
+    <main className="min-w-0 overflow-x-hidden bg-white text-[#09294b]">
       <style jsx global>{`
         @keyframes kingsizeFloat {
           0%,
@@ -301,6 +390,24 @@ export default function Home() {
 
         .hide-scrollbar::-webkit-scrollbar {
           display: none;
+        }
+
+        .category-drag-rail {
+          cursor: grab;
+        }
+
+        .category-drag-rail.dragging {
+          cursor: grabbing;
+        }
+
+        .category-drag-rail.dragging * {
+          cursor: grabbing !important;
+          user-select: none !important;
+        }
+
+        .category-drag-rail img {
+          -webkit-user-drag: none;
+          user-select: none;
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -391,7 +498,9 @@ export default function Home() {
           <button
             type="button"
             aria-label={
-              menuOpen ? "Close navigation menu" : "Open navigation menu"
+              menuOpen
+                ? "Close navigation menu"
+                : "Open navigation menu"
             }
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
@@ -421,8 +530,6 @@ export default function Home() {
             )}
           </button>
         </div>
-
-        {/* MOBILE NAV */}
 
         <div
           className={`fixed inset-0 z-50 bg-white transition-all duration-500 lg:hidden ${
@@ -472,6 +579,7 @@ export default function Home() {
             src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=90"
             alt="People enjoying drinks together"
             className="h-full w-full object-cover object-center opacity-55"
+            draggable={false}
           />
 
           <div className="absolute inset-0 bg-gradient-to-r from-[#061d36] via-[#09294b]/80 to-[#09294b]/25" />
@@ -546,8 +654,6 @@ export default function Home() {
               </div>
             </div>
 
-            {/* HERO VISUAL */}
-
             <div className="relative hidden h-[520px] lg:block">
               <div className="kingsize-float-slow absolute right-3 top-1/2 w-[380px] -translate-y-1/2 overflow-hidden rounded-[2.2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-sm">
                 <div className="relative h-[500px] overflow-hidden rounded-[1.8rem]">
@@ -555,6 +661,7 @@ export default function Home() {
                     src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90"
                     alt="Refreshing beverage"
                     className="h-full w-full object-cover"
+                    draggable={false}
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-transparent to-transparent" />
@@ -716,9 +823,14 @@ export default function Home() {
         </div>
 
         <div
-  ref={categoryRef}
-  className="hide-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto px-5 pb-5 sm:px-8 lg:px-[max(2rem,calc((100vw-1280px)/2))]"
->
+          ref={categoryRef}
+          onMouseDown={handleCategoryMouseDown}
+          onMouseMove={handleCategoryMouseMove}
+          onMouseUp={stopCategoryDragging}
+          onMouseLeave={stopCategoryDragging}
+          onDragStart={(event) => event.preventDefault()}
+          className="category-drag-rail hide-scrollbar mt-12 flex snap-x snap-mandatory gap-5 overflow-x-auto select-none px-5 pb-5 sm:px-8 lg:px-[max(2rem,calc((100vw-1280px)/2))]"
+        >
           {categories.map((category) => (
             <article
               key={category.name}
@@ -738,6 +850,7 @@ export default function Home() {
                         src={category.image}
                         alt="Hollandia Yoghurt"
                         className="h-full w-full object-contain p-4 transition duration-700 group-hover:scale-105"
+                        draggable={false}
                       />
                     </div>
 
@@ -746,6 +859,7 @@ export default function Home() {
                         src={category.secondaryImage}
                         alt="Hollandia Full Cream Evaporated Milk"
                         className="h-full w-full object-contain p-4 transition duration-700 group-hover:scale-105"
+                        draggable={false}
                       />
                     </div>
                   </div>
@@ -758,6 +872,7 @@ export default function Home() {
                         ? "object-contain p-10"
                         : "object-cover"
                     }`}
+                    draggable={false}
                   />
                 )}
               </div>
@@ -852,6 +967,7 @@ export default function Home() {
                         ? "object-contain p-10"
                         : "object-cover"
                     }`}
+                    draggable={false}
                   />
 
                   <div className="absolute inset-0 bg-gradient-to-t from-black/35 via-transparent to-transparent" />
@@ -916,6 +1032,17 @@ export default function Home() {
                 you need should be straightforward.
               </p>
 
+              <div className="mt-8 flex flex-wrap gap-3">
+                {["Retail", "Hospitality", "Events"].map((item) => (
+                  <span
+                    key={item}
+                    className="rounded-full border border-[#09294b]/10 bg-[#f5f6f7] px-4 py-2 text-xs font-black uppercase tracking-wider text-[#09294b]"
+                  >
+                    {item}
+                  </span>
+                ))}
+              </div>
+
               <Link
                 href="/quote"
                 className="mt-8 inline-flex items-center gap-3 rounded-full bg-[#09294b] px-6 py-4 text-sm font-black text-white transition hover:-translate-y-1 hover:bg-[#c8102e]"
@@ -961,26 +1088,8 @@ export default function Home() {
 
       <section id="about" className="bg-[#f5f6f7] py-20 sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
-          <div className="grid items-center gap-12 lg:grid-cols-[1.1fr_.9fr]">
-            <div className="relative">
-              <div className="overflow-hidden rounded-[2.2rem]">
-                <img
-                  src="https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1600&q=90"
-                  alt="People enjoying time together"
-                  className="aspect-[1.05] w-full object-cover transition duration-700 hover:scale-[1.02]"
-                />
-              </div>
-
-              <div className="absolute -bottom-5 -right-3 rounded-2xl bg-[#c8102e] px-6 py-5 text-white shadow-xl sm:-right-5">
-                <p className="text-3xl font-black">Good</p>
-
-                <p className="text-sm font-semibold text-white/75">
-                  moments start here.
-                </p>
-              </div>
-            </div>
-
-            <div className="max-w-xl lg:pl-8">
+          <div className="grid items-start gap-12 lg:grid-cols-[.82fr_1.18fr]">
+            <div className="max-w-xl lg:sticky lg:top-28">
               <p className="text-xs font-black uppercase tracking-[.2em] text-[#c8102e]">
                 More than a drink
               </p>
@@ -1010,6 +1119,45 @@ export default function Home() {
                 See how we help businesses
                 <Arrow />
               </Link>
+            </div>
+
+            <div className="grid gap-4 sm:gap-5 lg:grid-cols-12 lg:grid-rows-2">
+              {lifestyleImages.map((image, index) => (
+                <div
+                  key={image.src}
+                  className={`group relative overflow-hidden rounded-[1.75rem] bg-gray-200 sm:rounded-[2rem] ${image.className}`}
+                >
+                  <div
+                    className={`relative ${
+                      index === 0
+                        ? "aspect-[1.05] sm:aspect-[1.25]"
+                        : "aspect-[1.25]"
+                    } h-full min-h-full`}
+                  >
+                    <img
+                      src={image.src}
+                      alt={image.alt}
+                      loading={index === 0 ? "eager" : "lazy"}
+                      draggable={false}
+                      className="h-full w-full object-cover object-center transition duration-700 group-hover:scale-[1.035]"
+                    />
+
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/50 via-transparent to-transparent opacity-70" />
+
+                    {index === 0 && (
+                      <div className="absolute bottom-5 left-5 right-5 rounded-2xl bg-white/95 p-5 text-[#09294b] shadow-xl backdrop-blur-sm sm:bottom-7 sm:left-7 sm:right-7">
+                        <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#c8102e]">
+                          KINGSIZE IN THE REAL WORLD
+                        </p>
+
+                        <p className="mt-2 text-lg font-black sm:text-xl">
+                          Supplying the drinks behind everyday moments.
+                        </p>
+                      </div>
+                    )}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
         </div>
@@ -1042,66 +1190,73 @@ export default function Home() {
           </div>
 
           <div className="mt-12 grid gap-5 lg:grid-cols-[.75fr_1.25fr]">
-            <div className="flex flex-col gap-2">
-              {businessTypes.map((business, index) => (
-                <button
-                  type="button"
-                  key={business.title}
-                  onMouseEnter={() => setActiveBusiness(index)}
-                  onClick={() => setActiveBusiness(index)}
-                  className={`group flex items-center justify-between rounded-2xl p-5 text-left transition duration-300 ${
-                    activeBusiness === index
-                      ? "bg-white text-[#09294b]"
-                      : "bg-white/5 text-white hover:bg-white/10"
-                  }`}
-                >
-                  <div className="flex items-center gap-5">
-                    <span
-                      className={`text-xs font-black ${
-                        activeBusiness === index
-                          ? "text-[#c8102e]"
-                          : "text-white/30"
-                      }`}
-                    >
-                      {business.number}
-                    </span>
+            <div className="relative z-20 flex flex-col gap-2">
+              {businessTypes.map((business, index) => {
+                const isActive = activeBusiness === index;
 
-                    <span className="text-xl font-black">
-                      {business.title}
-                    </span>
-                  </div>
-
-                  <span
-                    className={`transition-transform duration-300 ${
-                      activeBusiness === index
-                        ? "translate-x-1 text-[#c8102e]"
-                        : "text-white/30"
+                return (
+                  <button
+                    key={business.title}
+                    type="button"
+                    aria-pressed={isActive}
+                    aria-label={`Show ${business.title} business information`}
+                    onClick={() => setActiveBusiness(index)}
+                    onFocus={() => setActiveBusiness(index)}
+                    className={`group relative z-20 flex min-h-[76px] w-full cursor-pointer touch-manipulation items-center justify-between rounded-2xl p-5 text-left outline-none transition-all duration-300 focus-visible:ring-2 focus-visible:ring-[#e31b3b] focus-visible:ring-offset-2 focus-visible:ring-offset-[#09294b] ${
+                      isActive
+                        ? "bg-white text-[#09294b] shadow-lg"
+                        : "bg-white/5 text-white hover:bg-white/10 active:scale-[0.99]"
                     }`}
                   >
-                    <Arrow />
-                  </span>
-                </button>
-              ))}
+                    <div className="flex items-center gap-5">
+                      <span
+                        className={`text-xs font-black ${
+                          isActive
+                            ? "text-[#c8102e]"
+                            : "text-white/30"
+                        }`}
+                      >
+                        {business.number}
+                      </span>
+
+                      <span className="text-xl font-black">
+                        {business.title}
+                      </span>
+                    </div>
+
+                    <span
+                      className={`transition-transform duration-300 ${
+                        isActive
+                          ? "translate-x-1 text-[#c8102e]"
+                          : "text-white/30 group-hover:translate-x-1 group-hover:text-white/60"
+                      }`}
+                    >
+                      <Arrow />
+                    </span>
+                  </button>
+                );
+              })}
             </div>
 
-            <div className="relative min-h-[430px] overflow-hidden rounded-[2rem] bg-black/20">
+            <div className="relative z-10 min-h-[430px] overflow-hidden rounded-[2rem] bg-black/20 sm:min-h-[500px]">
               {businessTypes.map((business, index) => (
                 <img
                   key={business.title}
                   src={business.image}
                   alt={business.title}
                   loading={index === 0 ? "eager" : "lazy"}
+                  draggable={false}
                   className={`absolute inset-0 h-full w-full object-cover transition-all duration-700 ${
                     activeBusiness === index
                       ? "scale-100 opacity-100"
-                      : "scale-105 opacity-0"
+                      : "pointer-events-none scale-105 opacity-0"
                   }`}
                 />
               ))}
 
               <div className="absolute inset-0 bg-gradient-to-t from-black/85 via-black/5 to-transparent" />
 
-              <div className="absolute inset-x-0 bottom-0 p-7 sm:p-9">
+              <div className="absolute inset-x-0 bottom-0 p-6 sm:p-9">
                 <p className="text-xs font-bold uppercase tracking-[.2em] text-white/50">
                   {businessTypes[activeBusiness].title}
                 </p>
@@ -1145,54 +1300,103 @@ export default function Home() {
                 Tell us what your business needs and we'll work with you on
                 the next step.
               </p>
+
+              <div className="mt-8 hidden rounded-2xl bg-[#f5f6f7] p-5 sm:block">
+                <p className="text-[10px] font-black uppercase tracking-[.18em] text-[#c8102e]">
+                  Wholesale ordering
+                </p>
+
+                <p className="mt-2 text-sm font-bold leading-6 text-[#09294b]">
+                  A straightforward process designed around your business
+                  requirements.
+                </p>
+              </div>
             </div>
 
-            <div className="grid divide-y divide-gray-200 border-y border-gray-200">
-              {[
-                [
-                  "01",
-                  "Tell us what you need",
-                  "Share the beverages, quantities and type of business you are supplying.",
-                ],
-                [
-                  "02",
-                  "Discuss availability",
-                  "We'll discuss current product availability and wholesale requirements.",
-                ],
-                [
-                  "03",
-                  "Confirm your order",
-                  "Once the details are agreed, confirm your order with KINGSIZE.",
-                ],
-                [
-                  "04",
-                  "Fulfilment & delivery",
-                  "Your beverage supply is prepared for the agreed fulfilment arrangement.",
-                ],
-              ].map(([number, title, description]) => (
-                <div
-                  key={number}
-                  className="group grid gap-4 py-7 transition hover:px-3 sm:grid-cols-[70px_1fr_auto] sm:items-center"
-                >
-                  <span className="text-sm font-black text-[#c8102e]">
-                    {number}
-                  </span>
+            <div className="relative">
+              <div className="absolute left-[27px] top-8 hidden h-[calc(100%-64px)] w-px bg-gray-200 sm:block" />
 
-                  <div>
-                    <h3 className="text-xl font-black text-[#09294b] sm:text-2xl">
-                      {title}
-                    </h3>
+              <div className="divide-y divide-gray-200 border-y border-gray-200">
+                {orderingSteps.map((step) => (
+                  <div
+                    key={step.number}
+                    className="group relative grid gap-5 py-7 transition sm:grid-cols-[56px_1fr_auto] sm:items-start sm:py-8 sm:hover:px-3"
+                  >
+                    <div className="relative z-10 flex h-14 w-14 items-center justify-center rounded-full border border-[#09294b]/10 bg-white text-sm font-black text-[#c8102e] shadow-sm">
+                      {step.number}
+                    </div>
 
-                    <p className="mt-2 text-sm leading-6 text-gray-500">
-                      {description}
-                    </p>
+                    <div>
+                      <h3 className="text-xl font-black text-[#09294b] sm:text-2xl">
+                        {step.title}
+                      </h3>
+
+                      <p className="mt-2 max-w-xl text-sm leading-7 text-gray-500">
+                        {step.text}
+                      </p>
+                    </div>
+
+                    <span className="hidden text-gray-300 transition group-hover:translate-x-1 group-hover:text-[#c8102e] sm:block">
+                      <Arrow />
+                    </span>
                   </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
 
-                  <span className="hidden text-gray-300 transition group-hover:translate-x-1 group-hover:text-[#c8102e] sm:block">
-                    <Arrow />
-                  </span>
-                </div>
-              ))}
+      {/* =========================================================
+          SERVICE / TRUST BAND
+      ========================================================== */}
+
+      <section className="border-y border-gray-100 bg-[#f5f6f7] py-14 sm:py-18">
+        <div className="mx-auto max-w-7xl px-5 sm:px-8">
+          <div className="grid gap-6 sm:grid-cols-3">
+            <div className="rounded-2xl bg-white p-6 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-[#c8102e]">
+                Retail
+              </p>
+
+              <p className="mt-3 text-lg font-black text-[#09294b]">
+                Keep your shelves stocked.
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Beverage supply for shops and businesses serving everyday
+                customers.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white p-6 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-[#c8102e]">
+                Hospitality
+              </p>
+
+              <p className="mt-3 text-lg font-black text-[#09294b]">
+                Keep tables and guests refreshed.
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Beverage support for restaurants, cafés, hotels and hospitality
+                businesses.
+              </p>
+            </div>
+
+            <div className="rounded-2xl bg-white p-6 shadow-sm">
+              <p className="text-xs font-black uppercase tracking-[.16em] text-[#c8102e]">
+                Events
+              </p>
+
+              <p className="mt-3 text-lg font-black text-[#09294b]">
+                Plan your beverage supply.
+              </p>
+
+              <p className="mt-2 text-sm leading-6 text-gray-500">
+                Supply conversations for celebrations, gatherings and organised
+                events.
+              </p>
             </div>
           </div>
         </div>
