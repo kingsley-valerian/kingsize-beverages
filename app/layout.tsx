@@ -14,11 +14,46 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "KINGSIZE Beverages | Wholesale Beverage Supply",
+  metadataBase: new URL("https://kingsize-beverages.vercel.app"),
+
+  title: {
+    default: "KINGSIZE Beverages | Wholesale Drinks & Beverage Supply",
+    template: "%s | KINGSIZE Beverages",
+  },
+
   description:
-    "KINGSIZE Beverages supplies quality beverages to retailers, businesses, events, and customers.",
+    "KINGSIZE Beverages supplies soft drinks, water, energy drinks, malt drinks, juices, yogurts, milk and other beverages to retailers, businesses, hospitality teams and events.",
+
+  keywords: [
+    "beverage wholesaler Nigeria",
+    "drinks wholesaler Nigeria",
+    "beverage supplier Nigeria",
+    "soft drinks wholesale Nigeria",
+    "drinks supplier Nigeria",
+    "wholesale beverages",
+    "soft drinks supplier",
+    "energy drinks wholesale",
+    "milk and dairy supplier",
+    "Hollandia wholesale Nigeria",
+    "KINGSIZE Beverages",
+  ],
+
   verification: {
     google: "fkPgq7FYUo-2A9xAZ7s6_UZOt7rhq3MSwEhTBbpf3BA",
+  },
+
+  openGraph: {
+    title: "KINGSIZE Beverages | Wholesale Drinks & Beverage Supply",
+    description:
+      "Quality beverages supplied to retailers, businesses, hospitality teams and events.",
+    url: "https://kingsize-beverages.vercel.app",
+    siteName: "KINGSIZE Beverages",
+    type: "website",
+  },
+
+  robots: {
+    index: true,
+    follow: true,
   },
 };
 
