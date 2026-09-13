@@ -25,9 +25,7 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
       lang="en"
       className={`${geistSans.variable} ${geistMono.variable} h-full antialiased`}
     >
-      <body className="min-h-full flex flex-col">
-        {children}
-
+      <head>
         <Script
           src="https://www.googletagmanager.com/gtag/js?id=G-JWX22NDN5F"
           strategy="afterInteractive"
@@ -41,7 +39,9 @@ export default function RootLayout({ children }: LayoutProps<"/">) {
             gtag('config', 'G-JWX22NDN5F');
           `}
         </Script>
-      </body>
+      </head>
+
+      <body className="min-h-full flex flex-col">{children}</body>
     </html>
   );
 }
