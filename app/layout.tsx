@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   title: "KINGSIZE Beverages | Wholesale Beverage Supply",
   description:
     "KINGSIZE Beverages supplies quality beverages to retailers, businesses, events, and customers.",
+  verification: {
+    google: "fkPgq7FYUo-2A9xAZ7s6_UZOt7rhq3MSwEhTBbpf3BA",
+  },
 };
 
 export default function RootLayout({ children }: LayoutProps<"/">) {
