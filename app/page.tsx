@@ -8,7 +8,17 @@ import {
 } from "react";
 import Link from "next/link";
 
-const categories = [
+type Category = {
+  name: string;
+  eyebrow: string;
+  label: string;
+  image: string;
+  imageFit: "cover" | "contain";
+  productLabel?: string;
+  secondaryImage?: string;
+};
+
+const categories: Category[] = [
   {
     name: "Soft Drinks",
     eyebrow: "01 / Everyday refreshment",
@@ -63,6 +73,45 @@ const categories = [
       "https://hollandiadairyng.com/assets/imgs/products-dp/prdts_fullCream_evaporated.png",
     imageFit: "contain" as const,
     productLabel: "HOLLANDIA",
+  },
+];
+
+const mobileNavItems = [
+  {
+    label: "Products",
+    href: "/products",
+    number: "01",
+    accent: "text-sky-300",
+    activeBg: "bg-sky-400/10",
+    border: "border-sky-300/30",
+    indicator: "bg-sky-300",
+  },
+  {
+    label: "For Business",
+    href: "#business",
+    number: "02",
+    accent: "text-red-400",
+    activeBg: "bg-red-500/10",
+    border: "border-red-400/30",
+    indicator: "bg-red-400",
+  },
+  {
+    label: "About",
+    href: "#about",
+    number: "03",
+    accent: "text-emerald-300",
+    activeBg: "bg-emerald-400/10",
+    border: "border-emerald-300/30",
+    indicator: "bg-emerald-300",
+  },
+  {
+    label: "Contact",
+    href: "/contact",
+    number: "04",
+    accent: "text-amber-300",
+    activeBg: "bg-amber-400/10",
+    border: "border-amber-300/30",
+    indicator: "bg-amber-300",
   },
 ];
 
@@ -247,18 +296,23 @@ export default function Home() {
   const categoryDragStartScrollLeft = useRef(0);
 
   const [scrolled, setScrolled] = useState(false);
+  const [mobileNavCompact, setMobileNavCompact] = useState(false);
   const [activeBusiness, setActiveBusiness] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
+  const [activeNav, setActiveNav] = useState("Products");
   const [activeProduct, setActiveProduct] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      setScrolled(window.scrollY > 40);
+      const y = window.scrollY;
+
+      setScrolled(y > 40);
+      setMobileNavCompact(y > 120);
     };
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll);
+    window.addEventListener("scroll", handleScroll, { passive: true });
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -435,17 +489,26 @@ export default function Home() {
             : "bg-transparent"
         }`}
       >
-        <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
+        <div
+          className={`mx-auto flex max-w-7xl items-center justify-between px-5 transition-all duration-500 sm:px-8 lg:h-[74px] lg:px-10 ${
+            mobileNavCompact ? "h-[58px]" : "h-[74px]"
+          }`}
+        >
+          {/* MOBILE/RESPONSIVE LOGO */}
           <Link
             href="/"
             onClick={closeMenu}
-            className="relative z-[60] flex shrink-0 items-center"
+            className={`relative z-[60] flex shrink-0 items-center overflow-hidden transition-all duration-500 ${
+              mobileNavCompact
+                ? "pointer-events-none w-0 -translate-x-3 opacity-0"
+                : "w-[82px] sm:w-[92px]"
+            } lg:pointer-events-auto lg:w-auto lg:translate-x-0 lg:opacity-100`}
             aria-label="Kingsize Beverages home"
           >
             <img
               src="/brand/kingsize-logo.png"
               alt="KINGSIZE BEVERAGES"
-              className={`block h-auto w-[96px] object-contain transition-all duration-500 sm:w-[106px] ${
+              className={`block h-auto w-[82px] object-contain transition-all duration-500 sm:w-[92px] lg:w-[106px] ${
                 scrolled
                   ? ""
                   : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
@@ -454,6 +517,7 @@ export default function Home() {
             />
           </Link>
 
+          {/* DESKTOP NAVIGATION */}
           <nav
             className={`hidden items-center gap-7 lg:flex ${
               scrolled ? "text-gray-800" : "text-white"
@@ -488,6 +552,7 @@ export default function Home() {
             </Link>
           </nav>
 
+          {/* DESKTOP QUOTE CTA */}
           <Link
             href="/quote"
             className="ml-2 hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8102e] px-5 text-sm font-bold text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-[#9f0d24] sm:inline-flex lg:ml-3"
@@ -495,6 +560,7 @@ export default function Home() {
             Request a Quote
           </Link>
 
+          {/* MOBILE MENU BUTTON */}
           <button
             type="button"
             aria-label={
@@ -504,10 +570,12 @@ export default function Home() {
             }
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className={`relative z-[60] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition lg:hidden ${
-              scrolled || menuOpen
-                ? "border-gray-200 bg-white text-gray-900"
-                : "border-white/30 bg-white/10 text-white backdrop-blur-sm"
+            className={`relative z-[60] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
+              menuOpen
+                ? "border-white/20 bg-white text-[#061d36]"
+                : scrolled
+                  ? "border-black/10 bg-white text-[#061d36] shadow-sm"
+                  : "border-white/30 bg-white/10 text-white backdrop-blur-md"
             }`}
           >
             {menuOpen ? (
@@ -531,40 +599,108 @@ export default function Home() {
           </button>
         </div>
 
+        {/* SOLID MOBILE NAVIGATION DRAWER */}
         <div
-          className={`fixed inset-0 z-50 bg-white transition-all duration-500 lg:hidden ${
+          className={`fixed inset-0 z-50 bg-[#061d36] text-white transition-all duration-500 lg:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
-              : "invisible -translate-y-5 opacity-0"
+              : "invisible -translate-y-3 opacity-0"
           }`}
         >
-          <div className="flex min-h-full flex-col px-6 pb-10 pt-28">
-            <div className="flex flex-1 flex-col">
-              {[
-                ["Products", "/products"],
-                ["For Business", "#business"],
-                ["About", "#about"],
-                ["Contact", "/contact"],
-              ].map(([label, href]) => (
-                <Link
-                  key={label}
-                  href={href}
-                  onClick={closeMenu}
-                  className="border-b border-gray-100 py-5 text-3xl font-black text-[#09294b]"
-                >
-                  {label}
-                </Link>
-              ))}
+          <div className="flex min-h-full flex-col overflow-y-auto bg-[#061d36] px-6 pb-8 pt-[92px]">
+            {/* DRAWER BRAND HEADER */}
+            <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-5">
+              <div>
+                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/40">
+                  KINGSIZE BEVERAGES
+                </p>
+                <p className="mt-1 text-sm font-semibold text-white/70">
+                  Wholesale beverage supply
+                </p>
+              </div>
+
+              <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
             </div>
 
-            <Link
-              href="/quote"
-              onClick={closeMenu}
-              className="mt-8 flex items-center justify-between rounded-2xl bg-[#c8102e] px-6 py-5 text-base font-black text-white"
-            >
-              Request a wholesale quote
-              <Arrow />
-            </Link>
+            {/* MOBILE NAVIGATION ITEMS */}
+            <nav className="flex-1">
+              {mobileNavItems.map((item) => {
+                const active = activeNav === item.label;
+
+                return (
+                  <Link
+                    key={item.label}
+                    href={item.href}
+                    onClick={() => {
+                      setActiveNav(item.label);
+                      setMenuOpen(false);
+                    }}
+                    className={`group relative flex items-center gap-4 border-b border-white/10 px-2 py-5 transition-all duration-300 ${
+                      active ? item.activeBg : "hover:bg-white/[0.04]"
+                    }`}
+                  >
+                    <span
+                      className={`absolute left-0 top-1/2 h-9 w-1 -translate-y-1/2 rounded-r-full transition-all duration-300 ${
+                        active
+                          ? `${item.indicator} scale-y-100`
+                          : "scale-y-0"
+                      }`}
+                    />
+
+                    <span
+                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[10px] font-black transition-all ${
+                        active
+                          ? `${item.accent} ${item.border} ${item.activeBg}`
+                          : "border-white/10 text-white/25 group-hover:border-white/20 group-hover:text-white/50"
+                      }`}
+                    >
+                      {item.number}
+                    </span>
+
+                    <span
+                      className={`flex-1 text-[1.65rem] font-black tracking-[-0.04em] transition-colors ${
+                        active
+                          ? "text-white"
+                          : "text-white/65 group-hover:text-white"
+                      }`}
+                    >
+                      {item.label}
+                    </span>
+
+                    <span
+                      className={`text-xl transition-all duration-300 group-hover:translate-x-1 ${
+                        active
+                          ? item.accent
+                          : "text-white/25 group-hover:text-white/70"
+                      }`}
+                    >
+                      →
+                    </span>
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* QUOTE CTA */}
+            <div className="mt-8">
+              <Link
+                href="/quote"
+                onClick={() => {
+                  setMenuOpen(false);
+                }}
+                className="flex w-full items-center justify-between rounded-2xl bg-[#c8102e] px-6 py-5 text-base font-black text-white shadow-[0_14px_35px_rgba(200,16,46,0.25)] transition-all duration-300 hover:bg-[#a80d27]"
+              >
+                <span>Request a wholesale quote</span>
+                <Arrow />
+              </Link>
+            </div>
+
+            {/* SMALL FOOTER DETAIL */}
+            <div className="mt-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.18em] text-white/30">
+              <span>Retail</span>
+              <span>Hospitality</span>
+              <span>Events</span>
+            </div>
           </div>
         </div>
       </header>
