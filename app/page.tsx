@@ -1,4 +1,4 @@
-﻿"use client";
+"use client";
 
 import {
   useEffect,
@@ -56,31 +56,30 @@ const categories: Category[] = [
     name: "Soft Drinks",
     eyebrow: "01 / Everyday refreshment",
     label: "Coca-Cola, Fanta, Sprite, Pepsi, Mirinda and more.",
-    image: "/images/kingsize/sprite-promo.jpg",
+    image:
+      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1200&q=90",
     imageFit: "cover",
   },
   {
     name: "Water",
     eyebrow: "02 / Pure hydration",
-    label:
-      "EVA table water for homes, offices, businesses and events.",
-    image: "/images/kingsize/refreshment.jpg",
+    label: "EVA table water for homes, offices, businesses and events.",
+    image:
+      "https://www.chomart.com/storage/images/eva-bottled-water-75cl-x-12-gxxmr32465.webp",
     imageFit: "contain",
     productLabel: "EVA TABLE WATER",
   },
   {
     name: "Energy Drinks",
     eyebrow: "03 / Keep moving",
-    label:
-      "Popular energy drinks for retail, hospitality and events.",
+    label: "Popular energy drinks for retail, hospitality and events.",
     image: "/images/kingsize/energy-drink.jpg",
     imageFit: "cover",
   },
   {
     name: "Juices & Yogurts",
     eyebrow: "04 / Fresh choices",
-    label:
-      "Juices, yogurt drinks and refreshing everyday favourites.",
+    label: "Juices, yogurt drinks and refreshing everyday favourites.",
     image: "/images/kingsize/tomi-promo.jpg",
     imageFit: "cover",
   },
@@ -89,7 +88,7 @@ const categories: Category[] = [
     eyebrow: "05 / Rich & satisfying",
     label:
       "Amstel Malta and other popular malt beverages for shops, hospitality and events.",
-    image: "/images/kingsize/tomi-promo.jpg",
+    image: "https://i.ebayimg.com/images/g/SrUAAeSwULxpLEsZ/s-l1200.jpg",
     imageFit: "contain",
     productLabel: "AMSTEL MALTA",
   },
@@ -110,7 +109,7 @@ const products: Product[] = [
     category: "Popular brands",
     description:
       "Stock everyday favourites customers already recognise and ask for.",
-    brands: "Coca-Cola • Fanta • Sprite • Pepsi • Mirinda",
+    brands: "Coca-Cola � Fanta � Sprite � Pepsi � Mirinda",
     image: "/images/kingsize/soft-drinks-case.jpg",
   },
   {
@@ -118,7 +117,7 @@ const products: Product[] = [
     category: "Everyday essentials",
     description:
       "Keep your shelves, tables and events supplied with bottled water.",
-    brands: "Bottled water • Still water • Event supply",
+    brands: "Bottled water � Still water � Event supply",
     image: "/images/kingsize/refreshment.jpg",
   },
   {
@@ -126,8 +125,7 @@ const products: Product[] = [
     category: "Fast-moving drinks",
     description:
       "Give customers more choice with popular energy and malt beverages.",
-    brands:
-      "Amstel Malta • Energy drinks • Selected beverages",
+    brands: "Amstel Malta � Energy drinks � Selected beverages",
     image: "/images/kingsize/energy-drink.jpg",
   },
 ];
@@ -136,22 +134,19 @@ const businessTypes: BusinessType[] = [
   {
     title: "Retail",
     number: "01",
-    text:
-      "Keep your shelves stocked with fast-moving beverage products your customers already know.",
+    text: "Keep your shelves stocked with fast-moving beverage products your customers already know.",
     image: "/images/kingsize/business-customer.jpg",
   },
   {
     title: "Hospitality",
     number: "02",
-    text:
-      "Give restaurants, cafés, hotels and hospitality businesses a dependable beverage supply partner.",
+    text: "Give restaurants, caf�s, hotels and hospitality businesses a dependable beverage supply partner.",
     image: "/images/kingsize/refreshment.jpg",
   },
   {
     title: "Events",
     number: "03",
-    text:
-      "From intimate gatherings to large events, get the drinks you need to keep people refreshed.",
+    text: "From intimate gatherings to large events, get the drinks you need to keep people refreshed.",
     image: "/images/kingsize/soft-drinks-case.jpg",
   },
 ];
@@ -160,26 +155,22 @@ const reasons: Reason[] = [
   {
     number: "01",
     title: "Wide beverage selection",
-    text:
-      "From everyday soft drinks and water to energy drinks, malt, juices and dairy beverages.",
+    text: "From everyday soft drinks and water to energy drinks, malt, juices and dairy beverages.",
   },
   {
     number: "02",
     title: "Wholesale focused",
-    text:
-      "We are built around the needs of businesses buying beverages for resale, service or events.",
+    text: "We are built around the needs of businesses buying beverages for resale, service or events.",
   },
   {
     number: "03",
     title: "Straightforward ordering",
-    text:
-      "Tell us what you need, discuss quantities and delivery requirements, then confirm your order.",
+    text: "Tell us what you need, discuss quantities and delivery requirements, then confirm your order.",
   },
   {
     number: "04",
     title: "Business-ready support",
-    text:
-      "A dependable supply partner should make restocking easier, not create more work.",
+    text: "A dependable supply partner should make restocking easier, not create more work.",
   },
 ];
 
@@ -187,26 +178,22 @@ const orderingSteps: OrderingStep[] = [
   {
     number: "01",
     title: "Tell us what you need",
-    text:
-      "Share the beverages, brands and quantities your business requires.",
+    text: "Share the beverages, brands and quantities your business requires.",
   },
   {
     number: "02",
     title: "Get your quote",
-    text:
-      "We'll review your requirements and discuss current availability and pricing.",
+    text: "We'll review your requirements and discuss current availability and pricing.",
   },
   {
     number: "03",
     title: "Confirm your order",
-    text:
-      "Agree on quantities, delivery details and the order requirements.",
+    text: "Agree on quantities, delivery details and the order requirements.",
   },
   {
     number: "04",
     title: "Receive your supply",
-    text:
-      "Your beverages are prepared for the agreed fulfilment arrangement.",
+    text: "Your beverages are prepared for the agreed fulfilment arrangement.",
   },
 ];
 
@@ -324,17 +311,14 @@ export default function Home() {
     });
   };
 
-  const handleCategoryMouseDown = (
-    event: ReactMouseEvent<HTMLDivElement>
-  ) => {
+  const handleCategoryMouseDown = (event: ReactMouseEvent<HTMLDivElement>) => {
     if (!categoryRef.current) return;
 
     if (event.button !== 0) return;
 
     categoryDragging.current = true;
     categoryDragStartX.current = event.clientX;
-    categoryDragStartScrollLeft.current =
-      categoryRef.current.scrollLeft;
+    categoryDragStartScrollLeft.current = categoryRef.current.scrollLeft;
 
     categoryRef.current.classList.add("cursor-grabbing");
     categoryRef.current.classList.add("dragging");
@@ -342,13 +326,10 @@ export default function Home() {
     event.preventDefault();
   };
 
-  const handleCategoryMouseMove = (
-    event: ReactMouseEvent<HTMLDivElement>
-  ) => {
+  const handleCategoryMouseMove = (event: ReactMouseEvent<HTMLDivElement>) => {
     if (!categoryDragging.current || !categoryRef.current) return;
 
-    const distance =
-      event.clientX - categoryDragStartX.current;
+    const distance = event.clientX - categoryDragStartX.current;
 
     categoryRef.current.scrollLeft =
       categoryDragStartScrollLeft.current - distance;
@@ -492,9 +473,7 @@ export default function Home() {
               src="/brand/kingsize-logo.png"
               alt="KINGSIZE BEVERAGES"
               className={`block h-auto w-[96px] object-contain transition-all duration-500 sm:w-[106px] ${
-                scrolled
-                  ? ""
-                  : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
+                scrolled ? "" : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
               }`}
               draggable={false}
             />
@@ -544,9 +523,7 @@ export default function Home() {
           <button
             type="button"
             aria-label={
-              menuOpen
-                ? "Close navigation menu"
-                : "Open navigation menu"
+              menuOpen ? "Close navigation menu" : "Open navigation menu"
             }
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
@@ -658,8 +635,8 @@ export default function Home() {
 
               <p className="mt-7 max-w-xl text-base leading-7 text-white/75 sm:text-lg sm:leading-8">
                 KINGSIZE supplies beverages for retailers, hospitality
-                businesses, offices, events and organisations that need to
-                keep people refreshed.
+                businesses, offices, events and organisations that need to keep
+                people refreshed.
               </p>
 
               <div className="mt-9 flex flex-col gap-3 sm:flex-row">
@@ -668,7 +645,6 @@ export default function Home() {
                   className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-black text-[#09294b] transition duration-300 hover:-translate-y-1 hover:shadow-2xl"
                 >
                   Explore beverages
-
                   <span className="transition-transform duration-300 group-hover:translate-x-1">
                     <Arrow />
                   </span>
@@ -742,7 +718,7 @@ export default function Home() {
                 </p>
 
                 <p className="mt-1 text-sm font-bold">
-                  Retail • Hospitality • Events
+                  Retail � Hospitality � Events
                 </p>
               </div>
 
@@ -781,10 +757,7 @@ export default function Home() {
               "Milk",
               "Event Supply",
             ].map((brand, index) => (
-              <div
-                key={`${brand}-${index}`}
-                className="flex items-center"
-              >
+              <div key={`${brand}-${index}`} className="flex items-center">
                 <span className="px-7 text-sm font-black uppercase tracking-[.12em] text-[#09294b]/35">
                   {brand}
                 </span>
@@ -1061,7 +1034,6 @@ export default function Home() {
                     className="group/link mt-6 inline-flex items-center gap-2 text-sm font-black text-gray-900 transition hover:text-[#c8102e]"
                   >
                     Request supply
-
                     <span className="transition-transform group-hover/link:translate-x-1">
                       <Arrow />
                     </span>
@@ -1090,8 +1062,8 @@ export default function Home() {
               </h2>
 
               <p className="mt-6 max-w-lg text-base leading-8 text-gray-500">
-                Your business has enough to think about. Getting the drinks
-                you need should be straightforward.
+                Your business has enough to think about. Getting the drinks you
+                need should be straightforward.
               </p>
 
               <div className="mt-8 flex flex-wrap gap-3">
@@ -1229,10 +1201,7 @@ export default function Home() {
           BUSINESS
       ========================================================== */}
 
-      <section
-        id="business"
-        className="bg-[#09294b] py-20 text-white sm:py-28"
-      >
+      <section id="business" className="bg-[#09294b] py-20 text-white sm:py-28">
         <div className="mx-auto max-w-7xl px-5 sm:px-8">
           <div className="max-w-3xl">
             <p className="text-xs font-black uppercase tracking-[.2em] text-[#e31b3b]">
@@ -1273,9 +1242,7 @@ export default function Home() {
                     <div className="flex items-center gap-5">
                       <span
                         className={`text-xs font-black ${
-                          isActive
-                            ? "text-[#c8102e]"
-                            : "text-white/30"
+                          isActive ? "text-[#c8102e]" : "text-white/30"
                         }`}
                       >
                         {business.number}
@@ -1359,8 +1326,8 @@ export default function Home() {
               </h2>
 
               <p className="mt-6 max-w-md text-sm leading-7 text-gray-500 sm:text-base">
-                Tell us what your business needs and we'll work with you on
-                the next step.
+                Tell us what your business needs and we'll work with you on the
+                next step.
               </p>
 
               <div className="mt-8 hidden rounded-2xl bg-[#f5f6f7] p-5 sm:block">
@@ -1441,7 +1408,7 @@ export default function Home() {
               </p>
 
               <p className="mt-2 text-sm leading-6 text-gray-500">
-                Beverage support for restaurants, cafés, hotels and hospitality
+                Beverage support for restaurants, caf�s, hotels and hospitality
                 businesses.
               </p>
             </div>
@@ -1496,7 +1463,6 @@ export default function Home() {
                 className="group inline-flex items-center justify-center gap-3 rounded-full bg-white px-7 py-4 text-sm font-black text-[#c8102e] transition hover:-translate-y-1 hover:shadow-2xl"
               >
                 Request a wholesale quote
-
                 <span className="transition-transform group-hover:translate-x-1">
                   <Arrow />
                 </span>
@@ -1522,8 +1488,8 @@ export default function Home() {
               />
 
               <p className="mt-5 max-w-md text-sm leading-7 text-white/45">
-                Wholesale beverage supply for retailers, hospitality
-                businesses, offices, events and organisations.
+                Wholesale beverage supply for retailers, hospitality businesses,
+                offices, events and organisations.
               </p>
 
               <Link
@@ -1541,24 +1507,15 @@ export default function Home() {
               </p>
 
               <div className="mt-5 flex flex-col gap-3 text-sm text-white/60">
-                <Link
-                  href="/products"
-                  className="transition hover:text-white"
-                >
+                <Link href="/products" className="transition hover:text-white">
                   Products
                 </Link>
 
-                <Link
-                  href="#business"
-                  className="transition hover:text-white"
-                >
+                <Link href="#business" className="transition hover:text-white">
                   For Business
                 </Link>
 
-                <Link
-                  href="#about"
-                  className="transition hover:text-white"
-                >
+                <Link href="#about" className="transition hover:text-white">
                   About KINGSIZE
                 </Link>
               </div>
@@ -1570,17 +1527,11 @@ export default function Home() {
               </p>
 
               <div className="mt-5 flex flex-col gap-3 text-sm text-white/60">
-                <Link
-                  href="/quote"
-                  className="transition hover:text-white"
-                >
+                <Link href="/quote" className="transition hover:text-white">
                   Request a Quote
                 </Link>
 
-                <Link
-                  href="/contact"
-                  className="transition hover:text-white"
-                >
+                <Link href="/contact" className="transition hover:text-white">
                   Contact Us
                 </Link>
               </div>
@@ -1589,7 +1540,7 @@ export default function Home() {
 
           <div className="flex flex-col justify-between gap-3 pt-7 text-xs text-white/30 sm:flex-row">
             <p>
-              © {new Date().getFullYear()} KINGSIZE BEVERAGES. All rights
+              � {new Date().getFullYear()} KINGSIZE BEVERAGES. All rights
               reserved.
             </p>
 

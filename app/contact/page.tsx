@@ -1,5 +1,6 @@
 "use client";
 
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { trackEvent } from "@/lib/analytics";
 
@@ -110,44 +111,76 @@ function CheckIcon() {
 }
 
 export default function ContactPage() {
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  useEffect(() => {
+    document.body.style.overflow = menuOpen ? "hidden" : "";
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [menuOpen]);
+
+  useEffect(() => {
+    const handleEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setMenuOpen(false);
+      }
+    };
+
+    window.addEventListener("keydown", handleEscape);
+
+    return () => {
+      window.removeEventListener("keydown", handleEscape);
+    };
+  }, []);
+
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <main className="min-h-screen bg-white text-slate-950">
       {/* HEADER */}
       <header className="fixed inset-x-0 top-0 z-50 border-b border-white/10 bg-[#071426]/95 backdrop-blur-xl">
         <div className="mx-auto flex h-[76px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
-          <Link href="/" className="shrink-0">
+          <Link
+            href="/"
+            onClick={closeMenu}
+            className="relative z-[70] flex shrink-0 items-center"
+          >
             <img
               src="/brand/kingsize-logo.png"
               alt="KINGSIZE BEVERAGES"
-              className="h-auto w-[94px] object-contain sm:w-[106px]"
+              className="block h-auto w-[94px] object-contain sm:w-[106px]"
             />
           </Link>
 
           <nav className="hidden items-center gap-8 lg:flex">
             <Link
               href="/"
-              className="text-sm font-medium text-white/75 transition hover:text-white"
+              className="text-sm font-medium text-white/75 transition hover:text-[#e21d2f]"
             >
               Home
             </Link>
 
             <Link
               href="/products"
-              className="text-sm font-medium text-white/75 transition hover:text-white"
+              className="text-sm font-medium text-white/75 transition hover:text-[#e21d2f]"
             >
               Products
             </Link>
 
             <Link
               href="/#business"
-              className="text-sm font-medium text-white/75 transition hover:text-white"
+              className="text-sm font-medium text-white/75 transition hover:text-[#e21d2f]"
             >
               Who We Supply
             </Link>
 
             <Link
               href="/#about"
-              className="text-sm font-medium text-white/75 transition hover:text-white"
+              className="text-sm font-medium text-white/75 transition hover:text-[#e21d2f]"
             >
               About
             </Link>
@@ -160,13 +193,119 @@ export default function ContactPage() {
             </Link>
           </nav>
 
-          <Link
-            href="/quote"
-            className="hidden items-center gap-2 rounded-full bg-[#e21d2f] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-red-950/20 transition hover:-translate-y-0.5 hover:bg-[#c91829] sm:inline-flex"
-          >
-            Request a Quote
-            <ArrowIcon />
-          </Link>
+          <div className="flex items-center gap-3">
+            <Link
+              href="/quote"
+              className="hidden items-center gap-2 rounded-full bg-[#e21d2f] px-5 py-3 text-sm font-semibold text-white shadow-lg shadow-red-950/20 transition hover:-translate-y-0.5 hover:bg-[#c91829] sm:inline-flex lg:inline-flex"
+            >
+              Request a Quote
+              <ArrowIcon />
+            </Link>
+
+            <button
+              type="button"
+              aria-label={
+                menuOpen
+                  ? "Close navigation menu"
+                  : "Open navigation menu"
+              }
+              aria-expanded={menuOpen}
+              onClick={() => setMenuOpen((open) => !open)}
+              className="relative z-[70] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border border-white/20 bg-white text-[#071426] shadow-lg transition hover:bg-slate-100 lg:hidden"
+            >
+              {menuOpen ? (
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M6 6l12 12" />
+                  <path d="M18 6L6 18" />
+                </svg>
+              ) : (
+                <svg
+                  width="22"
+                  height="22"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  strokeWidth="2"
+                  strokeLinecap="round"
+                >
+                  <path d="M4 6h16" />
+                  <path d="M4 12h16" />
+                  <path d="M4 18h16" />
+                </svg>
+              )}
+            </button>
+          </div>
+        </div>
+
+        {/* MOBILE NAVIGATION */}
+        <div
+          aria-hidden={!menuOpen}
+          className={`fixed inset-0 z-[60] bg-white transition-all duration-300 lg:hidden ${
+            menuOpen
+              ? "visible translate-y-0 opacity-100"
+              : "invisible -translate-y-5 opacity-0"
+          }`}
+        >
+          <div className="flex min-h-screen flex-col bg-white px-6 pb-10 pt-[100px]">
+            <div className="flex flex-1 flex-col">
+              <Link
+                href="/"
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-5 text-3xl font-black text-[#071426] transition-colors hover:text-[#e21d2f]"
+              >
+                Home
+              </Link>
+
+              <Link
+                href="/products"
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-5 text-3xl font-black text-[#071426] transition-colors hover:text-[#e21d2f]"
+              >
+                Products
+              </Link>
+
+              <Link
+                href="/#business"
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-5 text-3xl font-black text-[#071426] transition-colors hover:text-[#e21d2f]"
+              >
+                Who We Supply
+              </Link>
+
+              <Link
+                href="/#about"
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-5 text-3xl font-black text-[#071426] transition-colors hover:text-[#e21d2f]"
+              >
+                About
+              </Link>
+
+              <Link
+                href="/contact"
+                onClick={closeMenu}
+                className="border-b border-slate-100 py-5 text-3xl font-black text-[#e21d2f]"
+              >
+                Contact
+              </Link>
+            </div>
+
+            <Link
+              href="/quote"
+              onClick={closeMenu}
+              className="mt-8 flex items-center justify-between rounded-2xl bg-[#e21d2f] px-6 py-5 text-base font-black text-white shadow-lg shadow-red-950/20 transition hover:bg-[#c91829]"
+            >
+              Request a wholesale quote
+              <ArrowIcon />
+            </Link>
+          </div>
         </div>
       </header>
 
