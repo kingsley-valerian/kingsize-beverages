@@ -24,7 +24,7 @@ const categories: Category[] = [
     eyebrow: "01 / Everyday refreshment",
     label: "Coca-Cola, Fanta, Sprite, Pepsi, Mirinda and more.",
     image:
-      "/images/kingsize/soft-drinks-case.jpg",
+      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1200&q=90",
     imageFit: "cover" as const,
   },
   {
@@ -41,7 +41,7 @@ const categories: Category[] = [
     eyebrow: "03 / Keep moving",
     label: "Popular energy drinks for retail, hospitality and events.",
     image:
-      "/images/kingsize/energy-drink.jpg",
+      "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=1200&q=90",
     imageFit: "cover" as const,
   },
   {
@@ -49,7 +49,7 @@ const categories: Category[] = [
     eyebrow: "04 / Fresh choices",
     label: "Juices, yogurt drinks and refreshing everyday favourites.",
     image:
-      "/images/kingsize/refreshment.jpg",
+      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=1200&q=90",
     imageFit: "cover" as const,
   },
   {
@@ -121,16 +121,16 @@ const products = [
     category: "Popular brands",
     description:
       "Stock everyday favourites customers already recognise and ask for.",
-    brands: "Coca-Cola â€¢ Fanta â€¢ Sprite â€¢ Pepsi â€¢ Mirinda",
+    brands: "Coca-Cola • Fanta • Sprite • Pepsi • Mirinda",
     image:
-      "/images/kingsize/soft-drinks-case.jpg",
+      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1200&q=90",
   },
   {
     name: "Water & Hydration",
     category: "Everyday essentials",
     description:
       "Keep your shelves, tables and events supplied with bottled water.",
-    brands: "Bottled water â€¢ Still water â€¢ Event supply",
+    brands: "Bottled water • Still water • Event supply",
     image:
       "https://www.chomart.com/storage/images/eva-bottled-water-75cl-x-12-gxxmr32465.webp",
   },
@@ -139,7 +139,7 @@ const products = [
     category: "Fast-moving drinks",
     description:
       "Give customers more choice with popular energy and malt beverages.",
-    brands: "Amstel Malta â€¢ Energy drinks â€¢ Selected beverages",
+    brands: "Amstel Malta • Energy drinks • Selected beverages",
     image:
       "https://i.ebayimg.com/images/g/SrUAAeSwULxpLEsZ/s-l1200.jpg",
   },
@@ -156,16 +156,16 @@ const businessTypes = [
   {
     title: "Hospitality",
     number: "02",
-    text: "Give restaurants, cafÃ©s, hotels and hospitality businesses a dependable beverage supply partner.",
+    text: "Give restaurants, cafés, hotels and hospitality businesses a dependable beverage supply partner.",
     image:
-      "/images/kingsize/tomi-promo.jpg",
+      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1400&q=90",
   },
   {
     title: "Events",
     number: "03",
     text: "From intimate gatherings to large events, get the drinks you need to keep people refreshed.",
     image:
-      "/images/kingsize/business-customer.jpg",
+      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=90",
   },
 ];
 
@@ -217,17 +217,17 @@ const orderingSteps = [
 
 const lifestyleImages = [
   {
-    src: "/images/kingsize/tomi-promo.jpg",
+    src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1800&q=90",
     alt: "People enjoying time together",
     className: "lg:col-span-7 lg:row-span-2",
   },
   {
-    src: "/images/kingsize/business-customer.jpg",
+    src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=90",
     alt: "People sharing a social moment",
     className: "lg:col-span-5",
   },
   {
-    src: "/images/kingsize/sprite-promo.jpg",
+    src: "https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90",
     alt: "Refreshing beverage",
     className: "lg:col-span-5",
   },
@@ -668,13 +668,13 @@ export default function Home() {
                     </span>
 
                     <span
-                      className={`text-xl transition-all duration-300 group-hover:translate-x-1 ${
+                      className={`transition-all duration-300 group-hover:translate-x-1 ${
                         active
                           ? item.accent
                           : "text-white/25 group-hover:text-white/70"
                       }`}
                     >
-                      â†’
+                      <Arrow size={20} />
                     </span>
                   </Link>
                 );
@@ -712,7 +712,7 @@ export default function Home() {
       <section className="relative min-h-[760px] overflow-hidden bg-[#09294b] text-white sm:min-h-[850px]">
         <div className="absolute inset-0">
           <img
-            src="/images/kingsize/business-customer.jpg"
+            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=90"
             alt="People enjoying drinks together"
             className="h-full w-full object-cover object-center opacity-55"
             draggable={false}
@@ -794,7 +794,7 @@ export default function Home() {
               <div className="kingsize-float-slow absolute right-3 top-1/2 w-[380px] -translate-y-1/2 overflow-hidden rounded-[2.2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-sm">
                 <div className="relative h-[500px] overflow-hidden rounded-[1.8rem]">
                   <img
-                    src="/images/kingsize/sprite-promo.jpg"
+                    src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90"
                     alt="Refreshing beverage"
                     className="h-full w-full object-cover"
                     draggable={false}
@@ -832,7 +832,7 @@ export default function Home() {
                 </p>
 
                 <p className="mt-1 text-sm font-bold">
-                  Retail â€¢ Hospitality â€¢ Events
+                  Retail • Hospitality • Events
                 </p>
               </div>
 
@@ -943,7 +943,7 @@ export default function Home() {
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 text-[#09294b] transition hover:border-[#c8102e] hover:text-[#c8102e]"
                 aria-label="Previous categories"
               >
-                â†
+                ←
               </button>
 
               <button
@@ -952,7 +952,7 @@ export default function Home() {
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 text-[#09294b] transition hover:border-[#c8102e] hover:text-[#c8102e]"
                 aria-label="Next categories"
               >
-                â†’
+                →
               </button>
             </div>
           </div>
@@ -1515,7 +1515,7 @@ export default function Home() {
               </p>
 
               <p className="mt-2 text-sm leading-6 text-gray-500">
-                Beverage support for restaurants, cafÃ©s, hotels and hospitality
+                Beverage support for restaurants, cafés, hotels and hospitality
                 businesses.
               </p>
             </div>
@@ -1663,7 +1663,7 @@ export default function Home() {
 
           <div className="flex flex-col justify-between gap-3 pt-7 text-xs text-white/30 sm:flex-row">
             <p>
-              Â© {new Date().getFullYear()} KINGSIZE BEVERAGES. All rights
+              © {new Date().getFullYear()} KINGSIZE BEVERAGES. All rights
               reserved.
             </p>
 
@@ -1674,4 +1674,3 @@ export default function Home() {
     </main>
   );
 }
-
