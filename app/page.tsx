@@ -18,48 +18,79 @@ type Category = {
   secondaryImage?: string;
 };
 
+type Product = {
+  name: string;
+  category: string;
+  description: string;
+  brands: string;
+  image: string;
+};
+
+type BusinessType = {
+  title: string;
+  number: string;
+  text: string;
+  image: string;
+};
+
+type Reason = {
+  number: string;
+  title: string;
+  text: string;
+};
+
+type OrderingStep = {
+  number: string;
+  title: string;
+  text: string;
+};
+
+type LifestyleImage = {
+  src: string;
+  alt: string;
+  className: string;
+};
+
 const categories: Category[] = [
   {
     name: "Soft Drinks",
     eyebrow: "01 / Everyday refreshment",
     label: "Coca-Cola, Fanta, Sprite, Pepsi, Mirinda and more.",
-    image:
-      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1200&q=90",
-    imageFit: "cover" as const,
+    image: "/images/kingsize/sprite-promo.jpg",
+    imageFit: "cover",
   },
   {
     name: "Water",
     eyebrow: "02 / Pure hydration",
-    label: "EVA table water for homes, offices, businesses and events.",
-    image:
-      "https://www.chomart.com/storage/images/eva-bottled-water-75cl-x-12-gxxmr32465.webp",
-    imageFit: "contain" as const,
+    label:
+      "EVA table water for homes, offices, businesses and events.",
+    image: "/images/kingsize/refreshment.jpg",
+    imageFit: "contain",
     productLabel: "EVA TABLE WATER",
   },
   {
     name: "Energy Drinks",
     eyebrow: "03 / Keep moving",
-    label: "Popular energy drinks for retail, hospitality and events.",
-    image:
-      "https://images.unsplash.com/photo-1622543925917-763c34d1a86e?auto=format&fit=crop&w=1200&q=90",
-    imageFit: "cover" as const,
+    label:
+      "Popular energy drinks for retail, hospitality and events.",
+    image: "/images/kingsize/energy-drink.jpg",
+    imageFit: "cover",
   },
   {
     name: "Juices & Yogurts",
     eyebrow: "04 / Fresh choices",
-    label: "Juices, yogurt drinks and refreshing everyday favourites.",
-    image:
-      "https://images.unsplash.com/photo-1600271886742-f049cd451bba?auto=format&fit=crop&w=1200&q=90",
-    imageFit: "cover" as const,
+    label:
+      "Juices, yogurt drinks and refreshing everyday favourites.",
+    image: "/images/kingsize/tomi-promo.jpg",
+    imageFit: "cover",
   },
   {
     name: "Malt Drinks",
     eyebrow: "05 / Rich & satisfying",
     label:
       "Amstel Malta and other popular malt beverages for shops, hospitality and events.",
-    image:
-      "https://i.ebayimg.com/images/g/SrUAAeSwULxpLEsZ/s-l1200.jpg",
-    imageFit: "contain" as const,
+    image: "/images/kingsize/tomi-promo.jpg",
+    imageFit: "contain",
     productLabel: "AMSTEL MALTA",
   },
   {
@@ -67,63 +98,20 @@ const categories: Category[] = [
     eyebrow: "06 / Everyday essentials",
     label:
       "Hollandia yoghurt and full cream evaporated milk for everyday consumption and business supply.",
-    image:
-      "https://hollandiadairyng.com/assets/imgs/products-dp/prdts_yoghurt_plainSweetened.png",
-    secondaryImage:
-      "https://hollandiadairyng.com/assets/imgs/products-dp/prdts_fullCream_evaporated.png",
-    imageFit: "contain" as const,
+    image: "/images/kingsize/wholesale-milk.jpg",
+    imageFit: "contain",
     productLabel: "HOLLANDIA",
   },
 ];
 
-const mobileNavItems = [
-  {
-    label: "Products",
-    href: "/products",
-    number: "01",
-    accent: "text-sky-300",
-    activeBg: "bg-sky-400/10",
-    border: "border-sky-300/30",
-    indicator: "bg-sky-300",
-  },
-  {
-    label: "For Business",
-    href: "#business",
-    number: "02",
-    accent: "text-red-400",
-    activeBg: "bg-red-500/10",
-    border: "border-red-400/30",
-    indicator: "bg-red-400",
-  },
-  {
-    label: "About",
-    href: "#about",
-    number: "03",
-    accent: "text-emerald-300",
-    activeBg: "bg-emerald-400/10",
-    border: "border-emerald-300/30",
-    indicator: "bg-emerald-300",
-  },
-  {
-    label: "Contact",
-    href: "/contact",
-    number: "04",
-    accent: "text-amber-300",
-    activeBg: "bg-amber-400/10",
-    border: "border-amber-300/30",
-    indicator: "bg-amber-300",
-  },
-];
-
-const products = [
+const products: Product[] = [
   {
     name: "Soft Drinks",
     category: "Popular brands",
     description:
       "Stock everyday favourites customers already recognise and ask for.",
     brands: "Coca-Cola • Fanta • Sprite • Pepsi • Mirinda",
-    image:
-      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1200&q=90",
+    image: "/images/kingsize/soft-drinks-case.jpg",
   },
   {
     name: "Water & Hydration",
@@ -131,104 +119,111 @@ const products = [
     description:
       "Keep your shelves, tables and events supplied with bottled water.",
     brands: "Bottled water • Still water • Event supply",
-    image:
-      "https://www.chomart.com/storage/images/eva-bottled-water-75cl-x-12-gxxmr32465.webp",
+    image: "/images/kingsize/refreshment.jpg",
   },
   {
     name: "Energy & Malt",
     category: "Fast-moving drinks",
     description:
       "Give customers more choice with popular energy and malt beverages.",
-    brands: "Amstel Malta • Energy drinks • Selected beverages",
-    image:
-      "https://i.ebayimg.com/images/g/SrUAAeSwULxpLEsZ/s-l1200.jpg",
+    brands:
+      "Amstel Malta • Energy drinks • Selected beverages",
+    image: "/images/kingsize/energy-drink.jpg",
   },
 ];
 
-const businessTypes = [
+const businessTypes: BusinessType[] = [
   {
     title: "Retail",
     number: "01",
-    text: "Keep your shelves stocked with fast-moving beverage products your customers already know.",
-    image:
-      "https://images.unsplash.com/photo-1629203849820-fdd70d49c38e?auto=format&fit=crop&w=1400&q=90",
+    text:
+      "Keep your shelves stocked with fast-moving beverage products your customers already know.",
+    image: "/images/kingsize/business-customer.jpg",
   },
   {
     title: "Hospitality",
     number: "02",
-    text: "Give restaurants, cafés, hotels and hospitality businesses a dependable beverage supply partner.",
-    image:
-      "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1400&q=90",
+    text:
+      "Give restaurants, cafés, hotels and hospitality businesses a dependable beverage supply partner.",
+    image: "/images/kingsize/refreshment.jpg",
   },
   {
     title: "Events",
     number: "03",
-    text: "From intimate gatherings to large events, get the drinks you need to keep people refreshed.",
-    image:
-      "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1400&q=90",
+    text:
+      "From intimate gatherings to large events, get the drinks you need to keep people refreshed.",
+    image: "/images/kingsize/soft-drinks-case.jpg",
   },
 ];
 
-const reasons = [
+const reasons: Reason[] = [
   {
     number: "01",
     title: "Wide beverage selection",
-    text: "From everyday soft drinks and water to energy drinks, malt, juices and dairy beverages.",
+    text:
+      "From everyday soft drinks and water to energy drinks, malt, juices and dairy beverages.",
   },
   {
     number: "02",
     title: "Wholesale focused",
-    text: "We are built around the needs of businesses buying beverages for resale, service or events.",
+    text:
+      "We are built around the needs of businesses buying beverages for resale, service or events.",
   },
   {
     number: "03",
     title: "Straightforward ordering",
-    text: "Tell us what you need, discuss quantities and delivery requirements, then confirm your order.",
+    text:
+      "Tell us what you need, discuss quantities and delivery requirements, then confirm your order.",
   },
   {
     number: "04",
     title: "Business-ready support",
-    text: "A dependable supply partner should make restocking easier, not create more work.",
+    text:
+      "A dependable supply partner should make restocking easier, not create more work.",
   },
 ];
 
-const orderingSteps = [
+const orderingSteps: OrderingStep[] = [
   {
     number: "01",
     title: "Tell us what you need",
-    text: "Share the beverages, brands and quantities your business requires.",
+    text:
+      "Share the beverages, brands and quantities your business requires.",
   },
   {
     number: "02",
     title: "Get your quote",
-    text: "We'll review your requirements and discuss current availability and pricing.",
+    text:
+      "We'll review your requirements and discuss current availability and pricing.",
   },
   {
     number: "03",
     title: "Confirm your order",
-    text: "Agree on quantities, delivery details and the order requirements.",
+    text:
+      "Agree on quantities, delivery details and the order requirements.",
   },
   {
     number: "04",
     title: "Receive your supply",
-    text: "Your beverages are prepared for the agreed fulfilment arrangement.",
+    text:
+      "Your beverages are prepared for the agreed fulfilment arrangement.",
   },
 ];
 
-const lifestyleImages = [
+const lifestyleImages: LifestyleImage[] = [
   {
-    src: "https://images.unsplash.com/photo-1517457373958-b7bdd4587205?auto=format&fit=crop&w=1800&q=90",
-    alt: "People enjoying time together",
+    src: "/images/kingsize/wholesale-milk.jpg",
+    alt: "KINGSIZE wholesale supply in the real world",
     className: "lg:col-span-7 lg:row-span-2",
   },
   {
-    src: "https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=1200&q=90",
-    alt: "People sharing a social moment",
+    src: "/images/kingsize/tomi-promo.jpg",
+    alt: "Tomi beverage promotion",
     className: "lg:col-span-5",
   },
   {
-    src: "https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90",
-    alt: "Refreshing beverage",
+    src: "/images/kingsize/business-customer.jpg",
+    alt: "KINGSIZE serving business customers",
     className: "lg:col-span-5",
   },
 ];
@@ -296,23 +291,18 @@ export default function Home() {
   const categoryDragStartScrollLeft = useRef(0);
 
   const [scrolled, setScrolled] = useState(false);
-  const [mobileNavCompact, setMobileNavCompact] = useState(false);
   const [activeBusiness, setActiveBusiness] = useState(0);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [activeNav, setActiveNav] = useState("Products");
   const [activeProduct, setActiveProduct] = useState(0);
 
   useEffect(() => {
     const handleScroll = () => {
-      const y = window.scrollY;
-
-      setScrolled(y > 40);
-      setMobileNavCompact(y > 120);
+      setScrolled(window.scrollY > 40);
     };
 
     handleScroll();
 
-    window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("scroll", handleScroll);
 
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
@@ -343,7 +333,8 @@ export default function Home() {
 
     categoryDragging.current = true;
     categoryDragStartX.current = event.clientX;
-    categoryDragStartScrollLeft.current = categoryRef.current.scrollLeft;
+    categoryDragStartScrollLeft.current =
+      categoryRef.current.scrollLeft;
 
     categoryRef.current.classList.add("cursor-grabbing");
     categoryRef.current.classList.add("dragging");
@@ -356,7 +347,8 @@ export default function Home() {
   ) => {
     if (!categoryDragging.current || !categoryRef.current) return;
 
-    const distance = event.clientX - categoryDragStartX.current;
+    const distance =
+      event.clientX - categoryDragStartX.current;
 
     categoryRef.current.scrollLeft =
       categoryDragStartScrollLeft.current - distance;
@@ -489,26 +481,17 @@ export default function Home() {
             : "bg-transparent"
         }`}
       >
-        <div
-          className={`mx-auto flex max-w-7xl items-center justify-between px-5 transition-all duration-500 sm:px-8 lg:h-[74px] lg:px-10 ${
-            mobileNavCompact ? "h-[58px]" : "h-[74px]"
-          }`}
-        >
-          {/* MOBILE/RESPONSIVE LOGO */}
+        <div className="mx-auto flex h-[74px] max-w-7xl items-center justify-between px-5 sm:px-8 lg:px-10">
           <Link
             href="/"
             onClick={closeMenu}
-            className={`relative z-[60] flex shrink-0 items-center overflow-hidden transition-all duration-500 ${
-              mobileNavCompact
-                ? "pointer-events-none w-0 -translate-x-3 opacity-0"
-                : "w-[82px] sm:w-[92px]"
-            } lg:pointer-events-auto lg:w-auto lg:translate-x-0 lg:opacity-100`}
+            className="relative z-[60] flex shrink-0 items-center"
             aria-label="Kingsize Beverages home"
           >
             <img
               src="/brand/kingsize-logo.png"
               alt="KINGSIZE BEVERAGES"
-              className={`block h-auto w-[82px] object-contain transition-all duration-500 sm:w-[92px] lg:w-[106px] ${
+              className={`block h-auto w-[96px] object-contain transition-all duration-500 sm:w-[106px] ${
                 scrolled
                   ? ""
                   : "drop-shadow-[0_2px_8px_rgba(0,0,0,0.2)]"
@@ -517,7 +500,6 @@ export default function Home() {
             />
           </Link>
 
-          {/* DESKTOP NAVIGATION */}
           <nav
             className={`hidden items-center gap-7 lg:flex ${
               scrolled ? "text-gray-800" : "text-white"
@@ -552,7 +534,6 @@ export default function Home() {
             </Link>
           </nav>
 
-          {/* DESKTOP QUOTE CTA */}
           <Link
             href="/quote"
             className="ml-2 hidden h-10 shrink-0 items-center justify-center rounded-full bg-[#c8102e] px-5 text-sm font-bold text-white shadow-lg shadow-red-900/10 transition hover:-translate-y-0.5 hover:bg-[#9f0d24] sm:inline-flex lg:ml-3"
@@ -560,7 +541,6 @@ export default function Home() {
             Request a Quote
           </Link>
 
-          {/* MOBILE MENU BUTTON */}
           <button
             type="button"
             aria-label={
@@ -570,12 +550,10 @@ export default function Home() {
             }
             aria-expanded={menuOpen}
             onClick={() => setMenuOpen((open) => !open)}
-            className={`relative z-[60] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition-all duration-300 lg:hidden ${
-              menuOpen
-                ? "border-white/20 bg-white text-[#061d36]"
-                : scrolled
-                  ? "border-black/10 bg-white text-[#061d36] shadow-sm"
-                  : "border-white/30 bg-white/10 text-white backdrop-blur-md"
+            className={`relative z-[60] flex h-11 w-11 shrink-0 items-center justify-center rounded-full border transition lg:hidden ${
+              scrolled || menuOpen
+                ? "border-gray-200 bg-white text-gray-900"
+                : "border-white/30 bg-white/10 text-white backdrop-blur-sm"
             }`}
           >
             {menuOpen ? (
@@ -599,108 +577,40 @@ export default function Home() {
           </button>
         </div>
 
-        {/* SOLID MOBILE NAVIGATION DRAWER */}
         <div
-          className={`fixed inset-0 z-50 bg-[#061d36] text-white transition-all duration-500 lg:hidden ${
+          className={`fixed inset-0 z-50 bg-white transition-all duration-500 lg:hidden ${
             menuOpen
               ? "visible translate-y-0 opacity-100"
-              : "invisible -translate-y-3 opacity-0"
+              : "invisible -translate-y-5 opacity-0"
           }`}
         >
-          <div className="flex min-h-full flex-col overflow-y-auto bg-[#061d36] px-6 pb-8 pt-[92px]">
-            {/* DRAWER BRAND HEADER */}
-            <div className="mb-5 flex items-center justify-between border-b border-white/10 pb-5">
-              <div>
-                <p className="text-[10px] font-black uppercase tracking-[0.22em] text-white/40">
-                  KINGSIZE BEVERAGES
-                </p>
-                <p className="mt-1 text-sm font-semibold text-white/70">
-                  Wholesale beverage supply
-                </p>
-              </div>
-
-              <span className="h-2.5 w-2.5 rounded-full bg-[#c8102e]" />
+          <div className="flex min-h-full flex-col px-6 pb-10 pt-28">
+            <div className="flex flex-1 flex-col">
+              {[
+                ["Products", "/products"],
+                ["For Business", "#business"],
+                ["About", "#about"],
+                ["Contact", "/contact"],
+              ].map(([label, href]) => (
+                <Link
+                  key={label}
+                  href={href}
+                  onClick={closeMenu}
+                  className="border-b border-gray-100 py-5 text-3xl font-black text-[#09294b]"
+                >
+                  {label}
+                </Link>
+              ))}
             </div>
 
-            {/* MOBILE NAVIGATION ITEMS */}
-            <nav className="flex-1">
-              {mobileNavItems.map((item) => {
-                const active = activeNav === item.label;
-
-                return (
-                  <Link
-                    key={item.label}
-                    href={item.href}
-                    onClick={() => {
-                      setActiveNav(item.label);
-                      setMenuOpen(false);
-                    }}
-                    className={`group relative flex items-center gap-4 border-b border-white/10 px-2 py-5 transition-all duration-300 ${
-                      active ? item.activeBg : "hover:bg-white/[0.04]"
-                    }`}
-                  >
-                    <span
-                      className={`absolute left-0 top-1/2 h-9 w-1 -translate-y-1/2 rounded-r-full transition-all duration-300 ${
-                        active
-                          ? `${item.indicator} scale-y-100`
-                          : "scale-y-0"
-                      }`}
-                    />
-
-                    <span
-                      className={`flex h-8 w-8 shrink-0 items-center justify-center rounded-full border text-[10px] font-black transition-all ${
-                        active
-                          ? `${item.accent} ${item.border} ${item.activeBg}`
-                          : "border-white/10 text-white/25 group-hover:border-white/20 group-hover:text-white/50"
-                      }`}
-                    >
-                      {item.number}
-                    </span>
-
-                    <span
-                      className={`flex-1 text-[1.65rem] font-black tracking-[-0.04em] transition-colors ${
-                        active
-                          ? "text-white"
-                          : "text-white/65 group-hover:text-white"
-                      }`}
-                    >
-                      {item.label}
-                    </span>
-
-                    <span
-                      className={`transition-all duration-300 group-hover:translate-x-1 ${
-                        active
-                          ? item.accent
-                          : "text-white/25 group-hover:text-white/70"
-                      }`}
-                    >
-                      <Arrow size={20} />
-                    </span>
-                  </Link>
-                );
-              })}
-            </nav>
-
-            {/* QUOTE CTA */}
-            <div className="mt-8">
-              <Link
-                href="/quote"
-                onClick={() => {
-                  setMenuOpen(false);
-                }}
-                className="flex w-full items-center justify-between rounded-2xl bg-[#c8102e] px-6 py-5 text-base font-black text-white shadow-[0_14px_35px_rgba(200,16,46,0.25)] transition-all duration-300 hover:bg-[#a80d27]"
-              >
-                <span>Request a wholesale quote</span>
-                <Arrow />
-              </Link>
-            </div>
-
-            {/* SMALL FOOTER DETAIL */}
-            <div className="mt-6 flex items-center justify-between text-[10px] font-bold uppercase tracking-[0.18em] text-white/30">
-              <span>Retail</span>
-              <span>Hospitality</span>
-              <span>Events</span>
-            </div>
+            <Link
+              href="/quote"
+              onClick={closeMenu}
+              className="mt-8 flex items-center justify-between rounded-2xl bg-[#c8102e] px-6 py-5 text-base font-black text-white"
+            >
+              Request a wholesale quote
+              <Arrow />
+            </Link>
           </div>
         </div>
       </header>
@@ -712,8 +622,8 @@ export default function Home() {
       <section className="relative min-h-[760px] overflow-hidden bg-[#09294b] text-white sm:min-h-[850px]">
         <div className="absolute inset-0">
           <img
-            src="https://images.unsplash.com/photo-1529156069898-49953e39b3ac?auto=format&fit=crop&w=2400&q=90"
-            alt="People enjoying drinks together"
+            src="/images/kingsize/business-customer.jpg"
+            alt="KINGSIZE serving a business customer"
             className="h-full w-full object-cover object-center opacity-55"
             draggable={false}
           />
@@ -794,8 +704,8 @@ export default function Home() {
               <div className="kingsize-float-slow absolute right-3 top-1/2 w-[380px] -translate-y-1/2 overflow-hidden rounded-[2.2rem] border border-white/20 bg-white/10 p-2 shadow-2xl backdrop-blur-sm">
                 <div className="relative h-[500px] overflow-hidden rounded-[1.8rem]">
                   <img
-                    src="https://images.unsplash.com/photo-1554866585-cd94860890b7?auto=format&fit=crop&w=1200&q=90"
-                    alt="Refreshing beverage"
+                    src="/images/kingsize/wholesale-milk.jpg"
+                    alt="KINGSIZE wholesale supply in the real world"
                     className="h-full w-full object-cover"
                     draggable={false}
                   />
@@ -943,7 +853,21 @@ export default function Home() {
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 text-[#09294b] transition hover:border-[#c8102e] hover:text-[#c8102e]"
                 aria-label="Previous categories"
               >
-                ←
+                <span aria-hidden="true">
+                  <svg
+                    width="18"
+                    height="18"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    strokeWidth="2"
+                    strokeLinecap="round"
+                    strokeLinejoin="round"
+                  >
+                    <path d="M19 12H5" />
+                    <path d="m11 18-6-6 6-6" />
+                  </svg>
+                </span>
               </button>
 
               <button
@@ -952,7 +876,9 @@ export default function Home() {
                 className="flex h-12 w-12 items-center justify-center rounded-full border border-gray-200 text-[#09294b] transition hover:border-[#c8102e] hover:text-[#c8102e]"
                 aria-label="Next categories"
               >
-                →
+                <span aria-hidden="true">
+                  <Arrow />
+                </span>
               </button>
             </div>
           </div>
