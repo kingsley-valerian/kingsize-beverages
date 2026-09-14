@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 const contactOptions = [
   {
@@ -10,6 +11,8 @@ const contactOptions = [
       "Speak with us about wholesale supply, availability, quantities and delivery.",
     href: "tel:+2348163391254",
     action: "Call now",
+    eventName: "phone_click" as const,
+    location: "contact_card",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -29,6 +32,8 @@ const contactOptions = [
       "Send us a quick message and tell us what drinks your business needs.",
     href: "https://wa.me/2348163391254?text=Hello%20KINGSIZE%20BEVERAGES%2C%20I%27d%20like%20to%20make%20a%20wholesale%20enquiry.",
     action: "Chat on WhatsApp",
+    eventName: "whatsapp_click" as const,
+    location: "contact_card",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -49,6 +54,8 @@ const contactOptions = [
       "For detailed wholesale enquiries, business requests and supply discussions.",
     href: "mailto:kingsleyvalerian6@gmail.com?subject=KINGSIZE%20Wholesale%20Enquiry",
     action: "Send an email",
+    eventName: "email_click" as const,
+    location: "contact_card",
     icon: (
       <svg
         viewBox="0 0 24 24"
@@ -206,6 +213,11 @@ export default function ContactPage() {
                 href="https://wa.me/2348163391254?text=Hello%20KINGSIZE%20BEVERAGES%2C%20I%27d%20like%20to%20make%20a%20wholesale%20enquiry."
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent("whatsapp_click", {
+                    location: "hero",
+                  })
+                }
                 className="inline-flex items-center justify-center gap-2 rounded-full border border-white/20 bg-white/5 px-6 py-4 text-sm font-semibold text-white backdrop-blur transition hover:bg-white/10"
               >
                 Chat on WhatsApp
@@ -281,6 +293,11 @@ export default function ContactPage() {
                   option.href.startsWith("http")
                     ? "noopener noreferrer"
                     : undefined
+                }
+                onClick={() =>
+                  trackEvent(option.eventName, {
+                    location: option.location,
+                  })
                 }
                 className="group rounded-[28px] border border-slate-200 bg-white p-7 shadow-[0_12px_40px_rgba(15,23,42,0.05)] transition duration-300 hover:-translate-y-1 hover:border-slate-300 hover:shadow-[0_20px_55px_rgba(15,23,42,0.09)]"
               >
@@ -472,6 +489,11 @@ export default function ContactPage() {
               href="https://wa.me/2348163391254?text=Hello%20KINGSIZE%20BEVERAGES%2C%20I%27d%20like%20to%20make%20a%20wholesale%20enquiry."
               target="_blank"
               rel="noopener noreferrer"
+              onClick={() =>
+                trackEvent("whatsapp_click", {
+                  location: "cta",
+                })
+              }
               className="inline-flex items-center justify-center gap-2 rounded-full border border-white/15 bg-white/5 px-7 py-4 text-sm font-semibold text-white transition hover:bg-white/10"
             >
               WhatsApp KINGSIZE
@@ -503,6 +525,11 @@ export default function ContactPage() {
                 href="https://wa.me/2348163391254?text=Hello%20KINGSIZE%20BEVERAGES%2C%20I%27d%20like%20to%20make%20a%20wholesale%20enquiry."
                 target="_blank"
                 rel="noopener noreferrer"
+                onClick={() =>
+                  trackEvent("whatsapp_click", {
+                    location: "footer",
+                  })
+                }
                 className="mt-6 inline-flex items-center gap-2 text-sm font-semibold text-white transition hover:text-[#e21d2f]"
               >
                 WhatsApp: +234 816 339 1254
@@ -554,6 +581,11 @@ export default function ContactPage() {
               <div className="mt-5 grid gap-3">
                 <a
                   href="tel:+2348163391254"
+                  onClick={() =>
+                    trackEvent("phone_click", {
+                      location: "footer",
+                    })
+                  }
                   className="break-words text-sm text-white/60 transition hover:text-white"
                 >
                   +234 816 339 1254
@@ -561,6 +593,11 @@ export default function ContactPage() {
 
                 <a
                   href="mailto:kingsleyvalerian6@gmail.com"
+                  onClick={() =>
+                    trackEvent("email_click", {
+                      location: "footer",
+                    })
+                  }
                   className="break-words text-sm text-white/60 transition hover:text-white"
                 >
                   kingsleyvalerian6@gmail.com
@@ -570,6 +607,11 @@ export default function ContactPage() {
                   href="https://wa.me/2348163391254"
                   target="_blank"
                   rel="noopener noreferrer"
+                  onClick={() =>
+                    trackEvent("whatsapp_click", {
+                      location: "footer_contact",
+                    })
+                  }
                   className="text-sm text-white/60 transition hover:text-white"
                 >
                   WhatsApp

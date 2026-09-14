@@ -2,6 +2,7 @@
 
 import { FormEvent, useMemo, useState } from "react";
 import Link from "next/link";
+import { trackEvent } from "@/lib/analytics";
 
 const categories = [
   "Soft Drinks",
@@ -133,12 +134,16 @@ export default function QuotePage() {
       const result = await response.json();
 
       if (!response.ok || !result.success) {
-        throw new Error(
-          result.message || "We could not send your enquiry."
-        );
-      }
+  throw new Error(
+    result.message || "We could not send your enquiry."
+  );
+}
 
-      setSubmitted(true);
+trackEvent("generate_lead", {
+  method: "quote_form",
+});
+
+setSubmitted(true);
 
       window.scrollTo({
         top: 0,
